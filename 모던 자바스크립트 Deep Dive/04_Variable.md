@@ -6,7 +6,7 @@
 - 메모리 공간을 식별하기 위해 붙인 이름.
 => 값의 위치를 가리키는 상징적인 이름
 
-![../../images/deepDive_pic_4-2.png]
+![그림 4-2](../images/deepDive_pic_4-2.png)
 
 컴퓨터는 CPU에서 계산하고 메모리에서 데이터를 기억한다.
 
@@ -14,9 +14,9 @@
 var result = 10 + 20;
 ```
 
-![../../images/deepDive_pic_4-3.png]
+![그림 4-3](../images/deepDive_pic_4-3.png])
 
-![../../images/deepDive_pic_4-1.png]
+![그림 4-1](../images/deepDive_pic_4-1.png)
 
 할당: 변수에 값을 저장하는 것.
 참조: 값을 읽어 들이는 것.
@@ -34,7 +34,7 @@ var, let, const 키워드를 사용한다.
 var score;
 ```
 
-![../../images/deepDive_pic_4-4.png]
+![그림 4-4](../images/deepDive_pic_4-4.png)
 
 1. 선언단계
 2. 초기화단계 => 값을 할당하지 않았을 경우 undefined를 자동으로 할당해준다.
@@ -93,4 +93,4 @@ score = 90; // 값의 재할당
 
 값을 재할당 할 수 없어서 변수에 저장된 값을 변경할 수 없다면 변수가 아니라 상수이다.
 
-![../../images/deepDive_pic_4-5.png]
+![그림 4-5](../images/deepDive_pic_4-5.png)
