@@ -14,7 +14,7 @@
 var result = 10 + 20;
 ```
 
-![그림 4-3](../images/deepDive_pic_4-3.png])
+![그림 4-3](../images/deepDive_pic_4-3.png)
 
 ![그림 4-1](../images/deepDive_pic_4-1.png)
 
