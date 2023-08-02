@@ -78,9 +78,9 @@ console.log(foo); // ReferenceError: foo is not defined
 ```javascript
 var MYAPP = {}; // 전역 네임스페이스 객체
 
-MYAPP.name = 'Lee';
+MYAPP.name = 'Baek';
 
-console.log(MYAPP.name); // Lee
+console.log(MYAPP.name); // Baek
 ```
 
 [예제 14-06]
@@ -89,11 +89,11 @@ console.log(MYAPP.name); // Lee
 var MYAPP = {}; // 전역 네임스페이스 객체
 
 MYAPP.person = {
-  name: 'Lee',
+  name: 'Baek',
   address: 'Seoul'
 };
 
-console.log(MYAPP.person.name); // Lee
+console.log(MYAPP.person.name); // Baek
 ```
 
 ### 14.3.3 모듈 패턴

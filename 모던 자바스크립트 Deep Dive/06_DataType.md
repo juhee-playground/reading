@@ -73,9 +73,9 @@ console.log(foo); // undefined
 ## 6.6 null 타입
 
 ```javascript
-var foo = 'Lee';
+var foo = 'Baek';
 
-// 이전 참조를 제거. foo변수는 더 이상 'Lee'를 참조하지 않는다.
+// 이전 참조를 제거. foo변수는 더 이상 'Baek'를 참조하지 않는다.
 // 유용해 보이지 않는다. 변수의 스코프를 좁게 만들어 변수 자체를 서멸시키는 편이 낫다.
 foo = null;
 

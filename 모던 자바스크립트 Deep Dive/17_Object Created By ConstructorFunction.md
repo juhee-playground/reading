@@ -22,9 +22,9 @@ person.sayHello(); // Hi! My name is Juhee
 
 ```javascript
 // String 생성자 함수에 의한 String 객체 생성
-const strObj = new String('Lee');
+const strObj = new String('Baek');
 console.log(typeof strObj); // object
-console.log(strObj);        // String {"Lee"}
+console.log(strObj);        // String {"Baek"}
 
 // Number 생성자 함수에 의한 Number 객체 생성
 const numObj = new Number(123);

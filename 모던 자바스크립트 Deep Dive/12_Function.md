@@ -296,10 +296,10 @@ function changeVal(primitive, obj) {
 
 // 외부상태
 var num = 100;
-var person = { name: "Lee" };
+var person = { name: "Baek" };
 
 console.log(num);       // 100
-console.log(person);    // { name: "Lee" }
+console.log(person);    // { name: "Baek" }
 
 // 원시 값은 값 자체가 복사되어 전달되고 객체는 참조 값이 복사되어 전달된다.
 changeVal(num, person);

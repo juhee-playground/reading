@@ -26,7 +26,7 @@ var sum = 10 + 20;
 |불리언 리터럴|true/false|
 |null 리터럴|null|
 |undefined 리터럴|undefined|
-|객체 리터럴|{name: 'Lee', address: 'busan'}|
+|객체 리터럴|{name: 'Baek', address: 'busan'}|
 |배열 리터럴|[1, 2, 3]|
 |함수 리터럴|function() {}|
 |정규 표현식 리터럴|/[A-Z]+/g|

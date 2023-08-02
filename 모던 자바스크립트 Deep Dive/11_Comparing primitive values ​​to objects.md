@@ -74,7 +74,7 @@ console.log(score === copy);  // true
 
 ```javascript
 var person = {
-    name: "Lee"
+    name: "Baek"
 }
 ```
 
@@ -82,7 +82,7 @@ var person = {
 
 ```javascript
 var person = {
-    name: "Lee"
+    name: "Baek"
 }
 
 // 프로퍼티 값 갱신
@@ -91,7 +91,7 @@ person.name = 'Kim';
 // 프로퍼티 동적 생성
 person.address = 'Seoul';
 
-console.log(person); // { name: 'Lee', address: 'Seoul' }
+console.log(person); // { name: 'Baek', address: 'Seoul' }
 ```
 
 ![그림 11-8 객체는 변경 가능한 값이다](../images/11-8.png)
@@ -105,7 +105,7 @@ console.log(person); // { name: 'Lee', address: 'Seoul' }
 
 ```javascript
 var person = {
-    name: 'Lee'
+    name: 'Baek'
 }
 
 // 참조값을 얕은 복사
@@ -116,7 +116,7 @@ var copy = person;
 
 ```javascript
 var person = {
-    name: 'Lee'
+    name: 'Baek'
 }
 
 // 참조값을 복사(얕은 복사). copy와 person은 동일한 참조 값을 갖는다.

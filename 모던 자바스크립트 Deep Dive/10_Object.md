@@ -32,8 +32,8 @@
 
 ```javascript
 var person = {
-    // 프로퍼티 키는 name, 프로퍼티 값은 'Lee'
-    name: 'LEE',
+    // 프로퍼티 키는 name, 프로퍼티 값은 'Baek'
+    name: 'Baek',
     // 프로퍼티 키는 age, 프로퍼티 값은 20
     age: 20
 };
@@ -68,7 +68,7 @@ console.log(circle.getDiameter());  // 10
 
 ```javascript
 var person = {
-    name: 'LEE'
+    name: 'Baek'
 };
 
 // 마침표 표기법에 의한 프로퍼티 접근
@@ -85,7 +85,7 @@ console.log(peron.age);     // undefined
 
 ```javascript
 var person = {
-    name: 'LEE'
+    name: 'Baek'
 };
 
 // person 객체에 name 프로퍼티가 존재하므로 name 프로퍼티의 값이 갱신된다.
@@ -100,14 +100,14 @@ console.log(person);
 
 ```javascript
 var person = {
-    name: 'LEE'
+    name: 'Baek'
 };
 
 // person 객체에는 age 프로퍼티가 존재하지 않는다.
 // 따라서 person 객체에 age 프로퍼티가 동적으로 생성되고 값이 할당된다.
 person.age = 20;
 
-console.log(person);    // { name: 'Lee', age: 20 }
+console.log(person);    // { name: 'Baek', age: 20 }
 ```
 
 ## 10.7 프로퍼티 삭제
@@ -116,7 +116,7 @@ console.log(person);    // { name: 'Lee', age: 20 }
 
 ```javascript
 var person = {
-    name: 'LEE'
+    name: 'Baek'
 };
 // 프로퍼티 동적 생성
 person.age = 20;
@@ -128,7 +128,7 @@ delete person.age;
 // 따라서 delete 연산자 address 프로퍼티를 삭제할 수 없다. 이떄 에러가 발생하지 않는다.
 delete person.address;
 
-console.log(person);    // { name: 'Lee' }
+console.log(person);    // { name: 'Baek' }
 ```
 
 ## 10.9 ES6에서 추가된 객체 리터럴의 확장 기능
@@ -197,24 +197,24 @@ console.log(obj);    // {prop-1: 1, prop-2: 2, prop-3: 3}
 
 ```javascript
 var obj = {
-    name: 'Lee',
+    name: 'Baek',
     sayHi: function() {
         console.log("Hi! " + name);
     }
 };
 
-console.log(obj.sayHi);    // Hi! Lee
+console.log(obj.sayHi);    // Hi! Baek
 ```
 
 [예제 10-24]
 
 ```javascript
 const obj = {
-    name: 'Lee',
+    name: 'Baek',
     sayHi() {
         console.log("Hi! " + name);
     }
 };
 
-console.log(obj.sayHi);    // Hi! Lee
+console.log(obj.sayHi);    // Hi! Baek
 ```
