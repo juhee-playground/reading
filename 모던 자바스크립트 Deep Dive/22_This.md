@@ -328,7 +328,7 @@ const person = {
 console.log(person.getName()); // Juhee
 ```
 
-![그림 22-1 메서드는 객체에 포함된 것이 아닌 독립적으로 존재하는 별도의 객체다.](../../images/22-1.png)
+![그림 22-1 메서드는 객체에 포함된 것이 아닌 독립적으로 존재하는 별도의 객체다.](../images/22-1.png)
 
 [예제 22-15]
 
@@ -352,7 +352,7 @@ console.log(getName()); // ''
 // Node.js 환경에서 this.name은 undefined다.
 ```
 
-![그림 22-2 메서드 내부의 this는 자신을 호출한 객체를 가리킨다.](../../images/22-2.png)
+![그림 22-2 메서드 내부의 this는 자신을 호출한 객체를 가리킨다.](../images/22-2.png)
 
 [예제 22-16]
 
@@ -376,7 +376,7 @@ Person.prototype.name = 'Kim';
 console.log(Person.prototype.getName()); // ② Kim
 ```
 
-![그림 22-3 프로토타입 메서드와 this 바인딩](../../images/22-3.png)
+![그림 22-3 프로토타입 메서드와 this 바인딩](../images/22-3.png)
 
 ### 22.2.3 생성자 함수 호출
 
