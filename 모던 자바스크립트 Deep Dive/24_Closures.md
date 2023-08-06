@@ -295,7 +295,6 @@ num 변수를 지역 변수로 변경했지만 increase 함수가 호출될 때�
 
 [예제 24-11]
 
-
 ```javascript
 // 카운트 상태 변경 함수
 const increase = (function () {
@@ -420,4 +419,194 @@ console.log(decreaser()); // -2
 
 makeCounter 함수를 호출해 함수를 반환할 때 반환된 함수는 자신만의 독립된 렉시컬 환경을 갖는다.
 
-407P 부터 내일 하기;;;;
+![그림 24-9 makeCounter 함수를 처음 호출 했을 때 생성된 렉시컬 환경](../images/24-09.png)
+
+![그림 24-10 makeCounter 함수를 두번째 호출 했을 때 생성된 렉시컬 환경](../images/24-10.png)
+
+[예제 24-15]
+
+```javascript
+// 함수를 반환하는 고차 함수
+// 이 함수는 카운트 상태를 유지하기 위한 자유 변수 counter를 기억하는 클로저를 반환한다.
+const counter = (function () {
+  // 카운트 상태를 유지하기 위한 자유 변수
+  let counter = 0;
+
+  // 함수를 인수로 전달받는 클로저를 반환
+  return function (aux) {
+    // 인수로 전달 받은 보조 함수에 상태 변경을 위임한다.
+    counter = aux(counter);
+    return counter;
+  };
+}());
+
+// 보조 함수
+function increase(n) {
+  return ++n;
+}
+
+// 보조 함수
+function decrease(n) {
+  return --n;
+}
+
+// 보조 함수를 전달하여 호출
+console.log(counter(increase)); // 1
+console.log(counter(increase)); // 2
+
+// 자유 변수를 공유한다.
+console.log(counter(decrease)); // 1
+console.log(counter(decrease)); // 0
+```
+
+## 24.5 캡슐화와 정보 은닉
+
+캡슐화는 객체의 상태를 나타내는 프로퍼티와 프로퍼티를 참조하고 조작할 수 있는 매서드를 하나로 묶는 것.
+캡슐화는 객체의 특정 프로퍼티를 감출 목적으로 사용하기도 하는데 이를 은닉이라고 한다.
+
+정보 은닉은 객체의 상태가 변경되는 것을 방지해 정보를 보호하고 객체 간의 상호 의존성(결합도)을 낮추는 효과가 있다.
+
+[예제 24-16]
+
+```javascript
+function Person(name, age) {
+  this.name = name; // public
+  let _age = age;   // private
+
+  // 인스턴스 메서드
+  this.sayHi = function () {
+    console.log(`Hi! My name is ${this.name}. I am ${_age}.`);
+  };
+}
+
+const me = new Person('Lee', 20);
+me.sayHi(); // Hi! My name is Lee. I am 20.
+console.log(me.name); // Lee
+console.log(me._age); // undefined
+
+const you = new Person('Kim', 30);
+you.sayHi(); // Hi! My name is Kim. I am 30.
+console.log(you.name); // Kim
+console.log(you._age); // undefined
+```
+
+[예제 24-17]
+
+```javascript
+function Person(name, age) {
+  this.name = name; // public
+  let _age = age;   // private
+}
+
+// 프로토타입 메서드
+Person.prototype.sayHi = function () {
+  // Person 생성자 함수의 지역 변수 _age를 참조할 수 없다
+  console.log(`Hi! My name is ${this.name}. I am ${_age}.`);
+};
+```
+
+[예제 24-18]
+
+```javascript
+const Person = (function () {
+  let _age = 0; // private
+
+  // 생성자 함수
+  function Person(name, age) {
+    this.name = name; // public
+    _age = age;
+  }
+
+  // 프로토타입 메서드
+  Person.prototype.sayHi = function () {
+    console.log(`Hi! My name is ${this.name}. I am ${_age}.`);
+  };
+
+  // 생성자 함수를 반환
+  return Person;
+}());
+
+const me = new Person('Lee', 20);
+me.sayHi(); // Hi! My name is Lee. I am 20.
+console.log(me.name); // Lee
+console.log(me._age); // undefined
+
+const you = new Person('Kim', 30);
+you.sayHi(); // Hi! My name is Kim. I am 30.
+console.log(you.name); // Kim
+console.log(you._age); // undefined
+```
+
+[예제 24-19]
+
+```javascript
+const me = new Person('Lee', 20);
+me.sayHi(); // Hi! My name is Lee. I am 20.
+
+const you = new Person('Kim', 30);
+you.sayHi(); // Hi! My name is Kim. I am 30.
+
+// _age 변수 값이 변경된다!
+me.sayHi(); // Hi! My name is Lee. I am 30.
+```
+
+## 24.6 자주 발생하는 실수
+
+[예제 24-20]
+
+```javascript
+var funcs = [];
+
+for (var i = 0; i < 3; i++) {
+  funcs[i] = function () { return i; }; // ①
+}
+
+for (var j = 0; j < funcs.length; j++) {
+  console.log(funcs[j]()); // ②
+}
+```
+
+[예제 24-21]
+
+```javascript
+var funcs = [];
+
+for (var i = 0; i < 3; i++){
+  funcs[i] = (function (id) { // ①
+    return function () {
+      return id;
+    };
+  }(i));
+}
+
+for (var j = 0; j < funcs.length; j++) {
+  console.log(funcs[j]());
+}
+```
+
+[예제 24-22]
+
+```javascript
+const funcs = [];
+
+for (let i = 0; i < 3; i++) {
+  funcs[i] = function () { return i; };
+}
+
+for (let i = 0; i < funcs.length; i++) {
+  console.log(funcs[i]()); // 0 1 2
+}
+```
+
+[예제 24-23]
+
+```javascript
+// 요소가 3개인 배열을 생성하고 배열의 인덱스를 반환하는 함수를 요소로 추가한다.
+// 배열의 요소로 추가된 함수들은 모두 클로저다.
+const funcs = Array.from(new Array(3), (_, i) => () => i); // (3) [ƒ, ƒ, ƒ]
+
+// 배열의 요소로 추가된 함수 들을 순차적으로 호출한다.
+funcs.forEach(f => console.log(f())); // 0 1 2
+```
+
+
