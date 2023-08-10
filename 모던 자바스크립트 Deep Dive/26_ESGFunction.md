@@ -434,7 +434,7 @@ strict mode에서 일반 함수로서 호출된 모든 함수 내부의 this에�
 
 ES6에서는 화삻표 함수를 사용하여 "콜백 함수 내부의 this 문제"를 해결할 수 있다.
 
-[예젲 26-32]
+[예제 26-32]
 
 ```javascript
 class Prefixer {
@@ -454,3 +454,423 @@ console.log(prefixer.add(['transition', 'user-select']));
 
 **화살표 함수는 함수 자체의 this 바인딩을 갖지 않는다. 따라서 화살표 함수 내부에서 this를 참조하면 상위 스코프의 this를 그대로 참조한다. 이를 lexical this라 한다.**
 
+화살표 함수를 Function.prototype.bind를 사용하여 표현하면 다음과 같다.
+
+[예제 26-33]
+
+```javascript
+// 화살표 함수는 상위 스코프의 this를 참조한다.
+() => this.x;
+
+// 익명 함수에 상위 스코프의 this를 주입한다. 위 화살표 함수와 동일하게 동작한다.
+(function () { return this.x; }).bind(this);
+```
+
+[예제 26-34]
+
+```javascript
+// 중첩 함수 foo의 상위 스코프는 즉시 실행 함수다.
+// 따라서 화살표 함수 foo의 this는 상위 스코프인 즉시 실행 함수의 this를 가리킨다.
+(function () {
+  const foo = () => console.log(this);
+  foo();
+}).call({ a: 1 }); // { a: 1 }
+
+// bar 함수는 화살표 함수를 반환한다.
+// bar 함수가 반환한 화살표 함수의 상위 스코프는 화살표 함수 bar다.
+// 하지만 화살표 함수는 함수 자체의 this 바인딩을 갖지 않으므로 bar 함수가 반환한
+// 화살표 함수 내부에서 참조하는 this는 화살표 함수가 아닌 즉시 실행 함수의 this를 가리킨다.
+(function () {
+  const bar = () => () => console.log(this);
+  bar()();
+}).call({ a: 1 }); // { a: 1 }
+```
+
+[예제 26-35]
+
+```javascript
+// 전역 함수 foo의 상위 스코프는 전역이므로 화살표 함수 foo의 this는 전역 객체를 가리킨다.
+const foo = () => console.log(this);
+foo(); // window
+```
+
+[예제 26-36]
+
+```javascript
+// increase 프로퍼티에 할당한 화살표 함수의 상위 스코프는 전역이다.
+// 따라서 increase 프로퍼티에 할당한 화살표 함수의 this는 전역 객체를 가리킨다.
+const counter = {
+  num: 1,
+  increase: () => ++this.num
+};
+
+console.log(counter.increase()); // NaN
+```
+
+[예제 26-37]
+
+```javascript
+window.x = 1;
+
+const normal = function () { return this.x; };
+const arrow = () => this.x;
+
+console.log(normal.call({ x: 10 })); // 10
+console.log(arrow.call({ x: 10 }));  // 1
+```
+
+화살표 함수는 함수 자체의 this 바인딩을 갖지 않기 때문에 this를 교체할 수 없고 언제나 상위 스코프의 this 바인딩을 참조한다.
+
+[예제 26-38]
+
+```javascript
+const add = (a, b) => a + b;
+
+console.log(add.call(null, 1, 2));    // 3
+console.log(add.apply(null, [1, 2])); // 3
+console.log(add.bind(null, 1, 2)());  // 3
+```
+
+[예제 26-39]
+
+```javascript
+// Bad
+const person = {
+  name: 'Lee',
+  sayHi: () => console.log(`Hi ${this.name}`)
+};
+
+// sayHi 프로퍼티에 할당된 화살표 함수 내부의 this는 상위 스코프인 전역의 this가 가리키는
+// 전역 객체를 가리키므로 이 예제를 브라우저에서 실행하면 this.name은 빈 문자열을 갖는
+// window.name과 같다. 전역 객체 window에는 빌트인 프로퍼티 name이 존재한다.
+person.sayHi(); // Hi
+```
+
+[예제 26-40]
+
+```javascript
+// Good
+const person = {
+  name: 'Lee',
+  sayHi() {
+    console.log(`Hi ${this.name}`);
+  }
+};
+
+person.sayHi(); // Hi Lee
+```
+
+[예제 26-41]
+
+```javascript
+// Bad
+function Person(name) {
+  this.name = name;
+}
+
+Person.prototype.sayHi = () => console.log(`Hi ${this.name}`);
+
+const person = new Person('Lee');
+// 이 예제를 브라우저에서 실행하면 this.name은 빈 문자열을 갖는 window.name과 같다.
+person.sayHi(); // Hi
+```
+
+[예제 26-42]
+
+```javascript
+// Good
+function Person(name) {
+  this.name = name;
+}
+
+Person.prototype.sayHi = function () { console.log(`Hi ${this.name}`); };
+
+const person = new Person('Lee');
+person.sayHi(); // Hi Lee
+```
+
+[예제 26-43]
+
+```javascript
+function Person(name) {
+  this.name = name;
+}
+
+Person.prototype = {
+  // constructor 프로퍼티와 생성자 함수 간의 연결을 재설정
+  constructor: Person,
+  sayHi() { console.log(`Hi ${this.name}`); }
+};
+
+const person = new Person('Lee');
+person.sayHi(); // Hi Lee
+```
+
+[예제 26-44]
+
+```javascript
+// Bad
+class Person {
+  // 클래스 필드 정의 제안
+  name = 'Lee';
+  sayHi = () => console.log(`Hi ${this.name}`);
+}
+
+const person = new Person();
+person.sayHi(); // Hi Lee
+```
+
+[예제 26-45]
+
+```javascript
+class Person {
+  constructor() {
+    this.name = 'Lee';
+    // 클래스가 생성한 인스턴스(this)의 sayHi 프로퍼티에 화살표 함수를 할당한다.
+    // sayHi 프로퍼티는 인스턴스 프로퍼티이다.
+    this.sayHi = () => console.log(`Hi ${this.name}`);
+  }
+}
+```
+
+[예제 26-46]
+
+```javascript
+// Good
+class Person {
+  // 클래스 필드 정의
+  name = 'Lee';
+
+  sayHi() { console.log(`Hi ${this.name}`); }
+}
+const person = new Person();
+person.sayHi(); // Hi Lee
+```
+
+### 26.3.4 super
+
+화살표 함수는 함수 자체의 super 바인딩을 갖지 않는다. 따라서 화살표 함수 내부에서 super를 참조하면 this와 마찬가지로 상위 스코프의 super를 참조한다.
+
+[예제 26-47]
+
+```javascript
+class Base {
+  constructor(name) {
+    this.name = name;
+  }
+
+  sayHi() {
+    return `Hi! ${this.name}`;
+  }
+}
+
+class Derived extends Base {
+  // 화살표 함수의 super는 상위 스코프인 constructor의 super를 가리킨다.
+  sayHi = () => `${super.sayHi()} how are you doing?`;
+}
+
+const derived = new Derived('Lee');
+console.log(derived.sayHi()); // Hi! Lee how are you doing?
+```
+
+### 26.3.5 arguments
+
+화살표 함수는 함수 자체의 arguments 바인딩을 갖지 않는다. 상위 스코프의 arguments를 참조한다.
+
+[예제 26-48]
+
+```javascript
+(function () {
+  // 화살표 함수 foo의 arguments는 상위 스코프인 즉시 실행 함수의 arguments를 가리킨다.
+  const foo = () => console.log(arguments); // [Arguments] { '0': 1, '1': 2 }
+  foo(3, 4);
+}(1, 2));
+
+// 화살표 함수 foo의 arguments는 상위 스코프인 전역의 arguments를 가리킨다.
+// 하지만 전역에는 arguments 객체가 존재하지 않는다. arguments 객체는 함수 내부에서만 유효하다.
+const foo = () => console.log(arguments);
+foo(1, 2); // ReferenceError: arguments is not defined
+```
+
+## 26.4 Rest 파라미터
+
+Rest 파라미터는 함수에 전달된 인수들의 목록을 배열로 전달받는다.
+
+[예제 26-49]
+
+```javascript
+function foo(...rest) {
+  // 매개변수 rest는 인수들의 목록을 배열로 전달받는 Rest 파라미터다.
+  console.log(rest); // [ 1, 2, 3, 4, 5 ]
+}
+
+foo(1, 2, 3, 4, 5);
+```
+
+[예제 26-50]
+
+```javascript
+function foo(param, ...rest) {
+  console.log(param); // 1
+  console.log(rest);  // [ 2, 3, 4, 5 ]
+}
+
+foo(1, 2, 3, 4, 5);
+
+function bar(param1, param2, ...rest) {
+  console.log(param1); // 1
+  console.log(param2); // 2
+  console.log(rest);   // [ 3, 4, 5 ]
+}
+
+bar(1, 2, 3, 4, 5);
+```
+
+[예제 26-51]
+
+```javascript
+// rest 파라미터는 이름 그대로 먼저 선언된 매개변수에 할당된 인수를 제외한 나머지 인수들로 구성된 배열이 할당된다.
+// rest 파라미터는 반드시 마지막 파라미터여야 한다.
+function foo(...rest, param1, param2) { }
+
+foo(1, 2, 3, 4, 5);
+// SyntaxError: Rest parameter must be last formal parameter
+```
+
+[예제 26-52]
+
+```javascript
+// rest 파라미터는 단하나만 선언할 수 있다.
+function foo(...rest1, ...rest2) { }
+
+foo(1, 2, 3, 4, 5);
+// SyntaxError: Rest parameter must be last formal parameter
+```
+
+[예제 26-53]
+
+```javascript
+// rest는 함수 정의 시 선언한 매개변수 개수를 나타내는 함수 객체 length 프로퍼티에 영향을 주지 않는다.
+function foo(...rest) {}
+console.log(foo.length); // 0
+
+function bar(x, ...rest) {}
+console.log(bar.length); // 1
+
+function baz(x, y, ...rest) {}
+console.log(baz.length); // 2
+```
+
+### 26.4.2 Rest 파라미터와 arguments 객체
+
+[예제 26-54]
+
+```javascript
+// 매개변수의 개수를 사전에 알 수 없는 가변 인자 함수
+function sum() {
+  // 가변 인자 함수는 arguments 객체를 통해 인수를 전달받는다.
+  console.log(arguments);
+  console.log(arguments[1]);
+}
+
+sum(1, 2); // {length: 2, '0': 1, '1': 2} // 2
+```
+
+[예제 26-55]
+
+```javascript
+function sum() {
+  // 유사 배열 객체인 arguments 객체를 배열로 변환한다.
+  var array = Array.prototype.slice.call(arguments);
+
+  return array.reduce(function (pre, cur) {
+    return pre + cur;
+  }, 0);
+}
+
+console.log(sum(1, 2, 3, 4, 5)); // 15
+```
+
+[예제 26-56]
+
+```javascript
+function sum(...args) {
+  // Rest 파라미터 args에는 배열 [1, 2, 3, 4, 5]가 할당된다.
+  return args.reduce((pre, cur) => pre + cur, 0);
+}
+console.log(sum(1, 2, 3, 4, 5)); // 15
+```
+
+## 26.5 매개변수 기본값
+
+[예제 26-57]
+
+```javascript
+function sum(x, y) {
+  return x + y;
+}
+
+console.log(sum(1)); // NaN
+```
+
+[예제 26-58]
+
+```javascript
+function sum(x, y) {
+  // 인수가 전달되지 않아 매개변수의 값이 undefined인 경우 기본값을 할당한다.
+  x = x || 0;
+  y = y || 0;
+
+  return x + y;
+}
+
+console.log(sum(1, 2)); // 3
+console.log(sum(1));    // 1
+```
+
+[예제 26-59]
+
+```javascript
+function sum(x = 0, y = 0) {
+  return x + y;
+}
+
+console.log(sum(1, 2)); // 3
+console.log(sum(1));    // 1
+```
+
+[예제 26-60]
+
+```javascript
+// 매개변수 기본값은 매개변수에 인수를 전달하지 않은 경우와 undefined를 전달한 경우만 유효한다.
+function logName(name = 'Lee') {
+  console.log(name);
+}
+
+logName();          // Lee
+logName(undefined); // Lee
+logName(null);      // null
+```
+
+[예제 26-61]
+
+```javascript
+// Reset 파라미터에는 기본값을 지정할 수 없다.
+function foo(...rest = []) {
+  console.log(rest);
+}
+// SyntaxError: Rest parameter may not have a default initializer
+```
+
+[예제 26-62]
+
+```javascript
+function sum(x, y = 0) {
+  console.log(arguments);
+}
+
+console.log(sum.length); // 1
+
+sum(1);    // Arguments { '0': 1 }
+sum(1, 2); // Arguments { '0': 1, '1': 2 }
+```
