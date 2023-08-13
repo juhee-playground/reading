@@ -1606,7 +1606,5 @@ console.log(myArray.uniq().average());
 // TypeError: myArray.uniq(...).average is not a function
 ```
 
-
 메서드 체이닝: 연속적인 코드 줄에서 개체의 Method를 반복적으로 호출하는 것을 의미.
 Method가 객체를 반환하면 그 반환 값(객체)이 또 다른 Method를 호출할 수 있다.
-
