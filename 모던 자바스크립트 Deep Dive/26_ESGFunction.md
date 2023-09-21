@@ -75,7 +75,7 @@ console.log(new obj.f()); // f {}
 
 ## 26.2 메서드
 
-ES6 사양에서 메서드는 축약 표현으로 정의도니 함수만을 의미한다.
+ES6 사양에서 메서드는 축약 표현으로 정의된 함수만을 의미한다.
 
 [예제 26-05]
 
@@ -149,7 +149,7 @@ const derived = {
 console.log(derived.sayHi()); // Hi! Lee. how are you doing?
 ```
 
-ES6 메서드가 아닌 함수는 super 키워드를 사용할 수 없다. ES6 메서드가 아닌 함수는 내부 슬롯 [[HomeObject를 갖지 않기 때문이다.
+ES6 메서드가 아닌 함수는 super 키워드를 사용할 수 없다. ES6 메서드가 아닌 함수는 내부 슬롯 [[HomeObject]]를 갖지 않기 때문이다.
 
 [예제 26-10]
 
@@ -288,6 +288,7 @@ console.log(person.sayHi()); // Hi? My name is Lee.
 ```
 
 [예제 26-22]
+
 ```javascript
 // 화살표 함수도 일급 객체 이므로 Array.prototype.map, Array.prototype.filter, Array.prototype.reduce 같은 고차 함수에 인수로 전달할 수 있다.
 // ES5
@@ -337,17 +338,18 @@ console.log(person.sayHi()); // Hi? My name is Lee.
       function normal(a, a) { return a + a; }
       // SyntaxError: Duplicate parameter name not allowed in this context
     ```
-    
+
     [에제 26-27]
-    
+
     ```javascript
     // 화살표 함수에서 중복된 매개변수 이름을 사용하면 에러 발생.
       const arrow = (a, a) => a + a;
       // SyntaxError: Duplicate parameter name not allowed in this context
     ```
-03. **화살표 함수는 함수 자체의 this, arguments, super, new.target 바인딩을 갖지 않는다.
-    띠리사 화살표 함수 내부에서 this, arguments, super, new.target을 참조하면
-    스코프 체인을 통해 상위 스코프의 this, arguments, super, new.target을 참조한다.
+
+3. **화살표 함수는 함수 자체의 this, arguments, super, new.target 바인딩을 갖지 않는다.
+    따라서 화살표 함수 내부에서 this, arguments, super, new.target을 참조하면
+    스코프 체인을 통해 상위 스코프의 this, arguments, super, new.target을 참조한다.**
 
     만약 화살표 함수와 화살표 함수가 중첩되어 있다면 상위 화살표 함수에도 this, arguments, super, new.target 바인딩이 없으므로
     스코프 체인 상의 가장 가까운 상위 함수 중에서 화살효 함수가 아닌 함수의 this, arguments, super, new.target을 참조한다.
@@ -386,7 +388,7 @@ console.log(prefixer.add(['transition', 'user-select']));
 그런데 Array.prototype.map의 인수로 전달한 콜백 함수의 내부인 ②에서 this는 undefined를 가리킨다.
 Array.prototype.map 메서드가 콜백 함수를 일반 함수로서 호출하기 때문이다.
 
-클래슨 내부의 모든 코드는 strict mode가 암묵적으로 적용된다. 따라서 Array.prototype.map 메서드의 콜백 함수에도 strict mode가 적용된다.
+클래스 내부의 모든 코드는 strict mode가 암묵적으로 적용된다. 따라서 Array.prototype.map 메서드의 콜백 함수에도 strict mode가 적용된다.
 strict mode에서 일반 함수로서 호출된 모든 함수 내부의 this에는 전역 객체가 아니라 undefined가 바인딩되므로
 일반 함수로서 호출되는 Array.prototype.map 메서드의 콜백 함수 내부의 this에는 undeifned가 바인딩된다.
 
@@ -396,6 +398,7 @@ strict mode에서 일반 함수로서 호출된 모든 함수 내부의 this에�
 
 01. **add 메서드를 호출한 prefixer 객체를 가리키는 this를 일단 회피시킨 후에 콜백 함수 내부에서 사용한다.**
    [예제 26-29]
+
     ```javascript
       ...
       add(arr) {
@@ -408,7 +411,9 @@ strict mode에서 일반 함수로서 호출된 모든 함수 내부의 this에�
       }
       ...
     ```
-02. ** Array.prototpye.map의 두번째 인수로 add 메서드를 호출한 prefixer 객체를 가리키는 this를 전달한다.**
+
+2. **Array.prototpye.map의 두번째 인수로 add 메서드를 호출한 prefixer 객체를 가리키는 this를 전달한다.**
+
     [예제 26-30]
 
     ```javascript
@@ -420,8 +425,10 @@ strict mode에서 일반 함수로서 호출된 모든 함수 내부의 this에�
       }
       ...
     ```
-03. **Function.prototype.bind 메서드를 사용하여 add 메서드를 호출한 prefixer 객체를 가리키는 this를 바인딩 한다.**
+
+3. **Function.prototype.bind 메서드를 사용하여 add 메서드를 호출한 prefixer 객체를 가리키는 this를 바인딩 한다.**
    [에제 26-31]
+
   ```javascript
     ...
     add(arr) {
