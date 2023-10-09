@@ -1,4 +1,4 @@
-# 35 스르레드 문법
+# 35 스프레드 문법
 
 스프레드 문법 사용대상: Array, Strign, Map, Set, Dom컬렉션, arguments와 같이 for ... of 문으로 순회할 수 있는 이터러블에 한정된다.
 
