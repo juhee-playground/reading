@@ -1,36 +1,27 @@
 # 6. 데이터 타입
 
+원시타입: Number, string, boolean, undefined, null, symbol
+객체타입: 객체, 함수, 배열 등 위의 여섯가지 빼고 다
+
 ## 6.1 숫자타입(Number)
 
+숫자, 정수와 실수 구분없이 하나의 타입만이 존재한다.
+64비트 부동 소수점 형식을 따른다. 즉 모든 수를 실수로 처리한다.
+
 ```javascript
-// 모두 숫자 타입이다.
-var integer = 10;   // 정수
-var double = 10.12; // 실수
-var negative = -20; // 음의 정수
-
-var binary = 0b01000001; // 2진수
-var octal = 0o101;       // 8진수
-var hex = 0x41;          // 16진수
-
-// 표기법만 다를 뿐 모두 값은 값이다.
-console.log(binary);    // 65
-console.log(octal);     // 65
-console.log(hex);       // 65
-console.log(binary === octal);  // true
-console.log(octal === hex);     // true
-
 // 숫자타입은 모두 실수로 처리된다.
 console.log(1 === 0.1); // true
 console.log(4 / 2);     // 2
 console.log(3 / 2);     // 1.5
+```
 
-// 숫자타입은 특별한 값도 표현 가능하다.
-/*
+숫자타입은 특별한 값도 표현 가능하다.
+
 - Infinity : 양의 무한대
 - -Infinity : 음의 무한대
 - NaN : 산술 연산 불가(not-a-number)
-*/
 
+```javascript
 // 숫자 타입의 세 가지 특별한 값
 console.log(10 / 0);    // Infinity
 console.log(10 / -0);   // -Infinity
@@ -61,6 +52,8 @@ console.log(foo); // false
 
 ## 6.5 undefined 타입
 
+undefined 타입은 값으로 undefined가 유일한 값이다. 
+
 ```javascript
 var foo;
 
@@ -72,17 +65,12 @@ console.log(foo); // undefined
 
 ## 6.6 null 타입
 
-```javascript
-var foo = 'Baek';
-
-// 이전 참조를 제거. foo변수는 더 이상 'Baek'를 참조하지 않는다.
-// 유용해 보이지 않는다. 변수의 스코프를 좁게 만들어 변수 자체를 서멸시키는 편이 낫다.
-foo = null;
-
-console.log(foo); // false
-```
+null 타입은 null 이 유일한 값이다.
+변수에 값이 없다는 것을 의도적으로 명시.
 
 ## 6.7 심벌타입
+
+다른 값과 중복되지 않는 유일무이한 값.
 
 ```javascript
 var key = Symbol('key');
@@ -96,12 +84,9 @@ obj[key] = 'value';
 console.log(obj[key]); // value
 ```
 
-//TODO: ch33에 링크 연결하기
-심벌타입은 추후 33장에서 자세히 다룰 예정
-
 ## 6.8 객체타입
 
-자바스크립트를 이루고 ㅇ있는 거의 모든 것이 객체다.
+자바스크립트를 이루고 있는 거의 모든 것이 객체다.
 
 ## 6.9 데이터타입의 필요성
 

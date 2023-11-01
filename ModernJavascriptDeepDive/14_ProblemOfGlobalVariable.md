@@ -4,22 +4,9 @@
 
 ### 14.1.1 지역변수의 생명 주기
 
-[예제 14-01]
-
-```javascript
-function foo() {
-  var x = 'local';
-  console.log(x); // local
-  return x;
-}
-
-foo();
-console.log(x); // ReferenceError: x is not defined
-```
-
 지역변수의 생명주기는 함수의 생명 주기와 일치한다.
 
-[예제 14-01]
+[예제 14-02]
 
 ```javascript
 var x = 'global';
@@ -98,6 +85,8 @@ console.log(MYAPP.person.name); // Baek
 
 ### 14.3.3 모듈 패턴
 
+클로저 기반으로 동작.
+
 ```javascript
 var Counter = (function () {
     // private 변수
@@ -126,3 +115,6 @@ console.log(Counter.decrease()); // 0
 ### 14.3.4 ES6 모듈
 
 ES6 모듈은 파일 자체의 독자적인 모듈 스코프를 제공한다.
+
+> 캡슐화: 프로퍼티(객체의 상태)와 메서드(프로퍼티를 참조, 조작)를 하나로 묶는 것.
+> 정보은닉: 객체의 특정 프로퍼티나 메서드를 감출 목적으로 사용.
