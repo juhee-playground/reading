@@ -1,113 +1,12 @@
 # 17. 생성자 함수에 의한 객체 생성
 
-## 17.1 Object 생성자 함수
-
-[예제 17-01]
-
-```javascript
-// 빈 객체의 생성
-const person = new Object();
-
-// 프로퍼티 추가
-person.name = 'Juhee';
-person.sayHello = function () {
-  console.log('Hi! My name is ' + this.name);
-};
-
-console.log(person); // {name: "Juhee", sayHello: ƒ}
-person.sayHello(); // Hi! My name is Juhee
-```
-
-[예제 17-02]
-
-```javascript
-// String 생성자 함수에 의한 String 객체 생성
-const strObj = new String('Baek');
-console.log(typeof strObj); // object
-console.log(strObj);        // String {"Baek"}
-
-// Number 생성자 함수에 의한 Number 객체 생성
-const numObj = new Number(123);
-console.log(typeof numObj); // object
-console.log(numObj);        // Number {123}
-
-// Boolean 생성자 함수에 의한 Boolean 객체 생성
-const boolObj= new Boolean(true);
-console.log(typeof boolObj); // object
-console.log(boolObj);        // Boolean {true}
-
-// Function 생성자 함수에 의한 Function 객체(함수) 생성
-const func = new Function('x', 'return x * x');
-console.log(typeof func); // function
-console.dir(func);        // ƒ anonymous(x)
-
-// Array 생성자 함수에 의한 Array 객체(배열) 생성
-const arr = new Array(1, 2, 3);
-console.log(typeof arr); // object
-console.log(arr);        // [1, 2, 3]
-
-// RegExp 생성자 함수에 의한 RegExp 객체(정규 표현식) 생성
-const regExp = new RegExp(/ab+c/i);
-console.log(typeof regExp); // object
-console.log(regExp);        // /ab+c/i
-
-// Date 생성자 함수에 의한 Date 객체 생성
-const date = new Date();
-console.log(typeof date); // object
-console.log(date);        // Mon May 04 2020 08:36:33 GMT+0900 (대한민국 표준시)
-```
-
 ## 17.2 생성자 함수
 
-### 17.2.1 객체 리터럴에 의한 객체 생성 방식의 문제점
+생성자 함수란 new 연산자와 함께 호출하여 객체를 생성하는 함수
+생성자 함수에 의해 생성된 객체를 인스턴스라고 한다.
 
-[예제 17-03]
+> ([#### this](https://github.com/juhee-playground/reading/blob/main/ModernJavascriptDeepDivee/22_This.md))
 
-```javascript
-const circle1 = {
-  radius: 5,
-  getDiameter() {
-    return 2 * this.radius;
-  }
-};
-
-console.log(circle1.getDiameter()); // 10
-
-const circle2 = {
-  radius: 10,
-  getDiameter() {
-    return 2 * this.radius;
-  }
-};
-
-console.log(circle2.getDiameter()); // 20
-```
-
-### 17.2.2 생성자 함수에 의한 객체 생성 방식의 장점
-
-[예제 17-04]
-
-```javascript
-// 생성자 함수
-function Circle(radius) {
-  // 생성자 함수 내부의 this는 생성자 함수가 생성할 인스턴스를 가리킨다.
-  this.radius = radius;
-  this.getDiameter = function () {
-    return 2 * this.radius;
-  };
-}
-
-// 인스턴스의 생성
-const circle1 = new Circle(5);  // 반지름이 5인 Circle 객체를 생성
-const circle2 = new Circle(10); // 반지름이 10인 Circle 객체를 생성
-
-console.log(circle1.getDiameter()); // 10
-console.log(circle2.getDiameter()); // 20
-```
-
-> #### this
-> 
-> // TODO: 22장에 연결하기 나중에....
 > this 바인딩은 함수 호출 방식에 따라 동적으로 결정된다.
 > | 함수 호출 방식 | this가 가리키는 값(this 바인딩) |
 > |---------------|---------------------------------|
@@ -156,7 +55,7 @@ console.log(radius); // 15
 **인스턴스를 생성**하는 것과 **생성된 인스턴스를 초기화(인스턴스 프로퍼티 추가 및 초기화 할당)**하는 것이다.
 생성자 함수가 인스턴스를 생성하는 것은 필수이고 생성된 인스턴스를 초기화하는 것은 옵션이다.
 
-1. 인스턴스 생성과 this 바인딩
+1. 인스턴스 생성과 this 바인딩: 식별자와 값을 연결하는 과정
 2. 인스턴스 초기화
 3. 인스턴스 반환
 
@@ -474,39 +373,3 @@ console.log(circle.getDiameter());  // 10
 >    const circle = Circle(5);
 >    console.log(circle.getDiameter()); // 10
 >```
-
-참고로 대부분 빌트인 생성자 함수(Object, String, Number, Boolean, Function, Array, Date, RegExp, Promise 등)는 new 연산자와 함께 호출되었는지를 확인한 후 적절한 값을 반환한다.
-
-예를 들어 Object와 Function 생성자 함수는 new 연산자 없이 호출해도 new 연산자와 함께 호출했을 떄와 동일하게 동작.
-
-[예제 17-21]
-
-```javascript
-let obj = new Object();
-console.log(obj); // {}
-
-obj = Object();
-console.log(obj); // {}
-
-let f = new Function('x', 'return x ** x');
-console.log(f); // ƒ anonymous(x) { return x ** x }
-
-f = Function('x', 'return x ** x');
-console.log(f); // ƒ anonymous(x) { return x ** x }
-```
-
-하지만 String, Number, Boolean 생성자 함수는 new 연산자와 함께 호출했을 때 String, Number, Boolean 객체를 생성하여 반환하지만 new 연산자 없이 호출하면 문자열, 숫자, 불리언 값을 반환한다.
-
-[예제 17-22]
-
-```javascript
-const str = String(123);
-console.log(str, typeof str); // 123 string
-
-const num = Number('123');
-console.log(num, typeof num); // 123 number
-
-const bool = Boolean('true');
-console.log(bool, typeof bool); // true boolean
-```
-
