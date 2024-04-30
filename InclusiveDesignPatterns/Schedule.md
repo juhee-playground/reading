@@ -10,11 +10,11 @@ X
 
 4/29(월)
 
-- 문서(The Document)
+- 문서(The Document) V
 
 4/30(화)
 
-- 단락(A Paragraph)
+- 단락(A Paragraph) V
 - 블로그 포스트(A blog post)
 
 5/01(수)
