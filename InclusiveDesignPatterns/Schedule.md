@@ -15,17 +15,17 @@ X
 4/30(화)
 
 - 단락(A Paragraph) V
-- 블로그 포스트(A blog post)
+- 블로그 포스트(A blog post) V
 
 5/01(수)
 
-- 패턴에 의한 평가(Evaluation By Pattern)
-- 내비게이션 영역(Navigation regions)
+- 패턴에 의한 평가(Evaluation By Pattern) V
+- 내비게이션 영역(Navigation regions) V
 
 5/02(목)
 
-- 메뉴 버튼(A Menu Button)
-- 인클루시브 프로토타입(Inclusive Prototyping)
+- 메뉴 버튼(A Menu Button) V
+- 인클루시브 프로토타입(Inclusive Prototyping) V
 
 5/03(금)
 
