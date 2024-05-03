@@ -29,14 +29,13 @@ X
 
 5/03(금)
 
-- 제품 목록(A List of Products)
-- 필터 위젯(A Filter Widger)
+- 제품 목록(A List of Products) V
 
 5/04(토)
 
-- 등록 폼(A Regeistration Form)
+- 필터 위젯(A Filter Widger)
 
 5/05(일)
 
+- 등록 폼(A Regeistration Form)
 - 테스트 주도 마크업(Test-Driven Markup)
-- Further Reading
