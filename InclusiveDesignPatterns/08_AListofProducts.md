@@ -195,7 +195,7 @@ SERP는 검색 결과 페이지
 </main>
 ```
 
-구조화된 데이커를 포함시킨 코드
+구조화된 데이터를 포함시킨 코드
 
 ```html
 <main id="main" itemscope itemtype="http://schema.org/Product">
