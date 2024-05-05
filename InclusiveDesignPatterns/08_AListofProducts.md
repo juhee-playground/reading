@@ -255,6 +255,7 @@ SERP는 검색 결과 페이지
 [구글의 구조화된 데이터 테스팅 도구](http://search.google.com/structured-data/testing-tool)
 
  `<meta>` 태그 중간에쓰는 법
+  `itemprop` `itemscope` `itemtype` 사용법?
 
 ## 해시태그: 키워드
 #인클루시브디자인 #제품목록
