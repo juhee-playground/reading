@@ -33,9 +33,12 @@ X
 
 5/04(토)
 
-- 필터 위젯(A Filter Widger)
+- 필터 위젯(A Filter Widget) V
 
 5/05(일)
 
-- 등록 폼(A Regeistration Form)
+- 등록 폼(A Regeistration Form) - 읽기만
+
+5/06(월)
+
 - 테스트 주도 마크업(Test-Driven Markup)
