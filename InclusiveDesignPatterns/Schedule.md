@@ -37,8 +37,8 @@ X
 
 5/05(일)
 
-- 등록 폼(A Regeistration Form) - 읽기만
+- 등록 폼(A Regeistration Form) V
 
 5/06(월)
 
-- 테스트 주도 마크업(Test-Driven Markup)
+- 테스트 주도 마크업(Test-Driven Markup) - 읽기만
